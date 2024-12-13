@@ -29,6 +29,9 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
-		"linkedom": "^0.18.5"
+		"@threlte/core": "^8.0.0-next.33",
+		"@threlte/extras": "^9.0.0-next.44",
+		"linkedom": "^0.18.5",
+		"three": "^0.171.0"
 	}
 }
