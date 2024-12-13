@@ -4,7 +4,16 @@ import { json } from "@sveltejs/kit";
 import type { Contribution } from '$lib/types'
 
 const getContributions = async ({ user, year }: RouteParams) => {
-  const api = `https://github.com/users/${user}/contributions?from=${year}-12-01&to=${year}-12-31`
+  let api = `https://github.com/users/${user}/contributions?from=${year}-12-01&to=${year}-12-31`
+
+  const isCurrentYear = new Date().getFullYear().toString() === year
+
+  if (isCurrentYear) {
+    const date = new Date().toLocaleDateString("en-CA")
+    const month = date.split("-")[1]
+    api = `https://github.com/users/${user}/contributions?from=${year}-${month}-01&to=${date}`
+  }
+
   const res = await fetch(api)
 
   if (!res.ok) {
@@ -55,7 +64,15 @@ const parseContributions = (html: string) => {
 
 }
 
-export const GET: RequestHandler = async ({ params }) => {
+export const GET: RequestHandler = async ({ params, setHeaders }) => {
+  const year = 60 * 60 * 24 * 356
+
+  setHeaders({
+    'Cache-Control': `public, s-maxage=${year}`,
+    'CDN-Cache-Control': `public, s-maxage=${year}`,
+    'Vercel-CDN-Cache-Control': `public, s-maxage=${year}`,
+  })
+
   const html = await getContributions(params)
   const result = parseContributions(html)
 
