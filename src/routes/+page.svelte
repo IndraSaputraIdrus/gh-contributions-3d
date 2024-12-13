@@ -1,2 +1,70 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+	import type { Contribution } from '$lib/types';
+
+	type Props = {
+		data: {
+			contributions: Contribution[][];
+		};
+	};
+
+	let props: Props = $props();
+
+	let contributions = $derived(props.data.contributions);
+</script>
+
+<h1>Github contrib</h1>
+
+<table>
+	<tbody>
+		{#each contributions as row}
+			<tr>
+				{#each row as day}
+					<td data-level={day?.level}></td>
+				{/each}
+			</tr>
+		{/each}
+	</tbody>
+</table>
+
+<style>
+	:global(html, body) {
+		height: 100%;
+	}
+
+	:global(body) {
+		display: grid;
+		place-content: center;
+		font-family: sans-serif;
+		color: hsl(220 10% 98%);
+		background-color: hsl(220 10% 10%);
+	}
+
+	h1 {
+		text-align: center;
+	}
+
+	td {
+		padding: 0.4rem;
+		border-radius: 2px;
+
+		&[data-level='0'] {
+			background-color: #2c333b;
+		}
+
+		&[data-level='1'] {
+			background-color: #00442a;
+		}
+
+		&[data-level='2'] {
+			background-color: #006d35;
+		}
+
+		&[data-level='3'] {
+			background-color: #00a648;
+		}
+
+		&[data-level='4'] {
+			background-color: #00d35c;
+		}
+	}
+</style>
