@@ -26,21 +26,12 @@
 	</tbody>
 </table>
 
+<a href="/3d?user=indrasaputraidrus&year=2023">View 3d</a>
+
 <style>
-	:global(html, body) {
-		height: 100%;
-	}
-
-	:global(body) {
-		display: grid;
-		place-content: center;
-		font-family: sans-serif;
-		color: hsl(220 10% 98%);
-		background-color: hsl(220 10% 10%);
-	}
-
 	h1 {
 		text-align: center;
+		margin-bottom: 1rem;
 	}
 
 	td {
@@ -67,4 +58,21 @@
 			background-color: #00d35c;
 		}
 	}
+
+  a {
+    display: block;
+    margin-inline: auto;
+    background: #fff;
+    color: black;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    margin-top: 1.5rem;
+    transition: opacity 100ms ease-in-out;
+    font-weight: 600;
+
+    &:hover {
+      opacity: 60%;
+    }
+  }
 </style>

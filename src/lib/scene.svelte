@@ -53,14 +53,17 @@
 <T.DirectionalLight position={[0, 200, 200]} intensity={2} color="#fff" />
 <T.DirectionalLight position={[0, 200, -200]} intensity={2} color="#fff" />
 
-<Align auto position.y={80}>
+<Align auto position.y={70}>
 	{#each contributions as row, i}
 		{#each row as col, j}
 			{#if col}
-				{@const color = getColor(col.level)}
-				{@const y = normalize(col.count)}
 				<T.Group position={[0, 0, 12 * i]} scale.y={scaleY.current}>
-					<T.Mesh position={[12 * j, y / 2, 0]}>
+					{@const color = getColor(col.level)}
+					{@const y = normalize(col.count)}
+					{@const px = 12 * j}
+					{@const py = y / 2}
+					{@const pz = 0}
+					<T.Mesh position.x={px} position.y={py} position.z={pz}>
 						<T.BoxGeometry args={[10, y, 10]} />
 						<T.MeshStandardMaterial {color} />
 					</T.Mesh>
