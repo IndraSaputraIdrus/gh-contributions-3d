@@ -3,12 +3,20 @@
 	import Scene from '$lib/scene.svelte';
 	import type { Contribution } from '$lib/types';
 	import { fade } from 'svelte/transition';
+	import Loading from '$lib/loading.svelte';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	let contributions: Contribution[][] = $state([]);
 	let loading = $state(true);
 
+  let username = $derived($page.url.searchParams.get('user') ?? null)
+  let year = $derived($page.url.searchParams.get('year') ?? null)
+
 	async function getContributions() {
-		const res = await fetch('/indrasaputraidrus/2024');
+    if(!username || !year) return goto('/')
+
+		const res = await fetch(`${username}/${year}`);
 		contributions = await res.json();
 		loading = false;
 	}
@@ -21,7 +29,7 @@
 <div class="scene">
 	{#if loading}
 		<div class="wrapper">
-			<h1>loading</h1>
+      <Loading />
 		</div>
 	{:else}
 		<div class='scene' in:fade={{ duration: 500 }}>
